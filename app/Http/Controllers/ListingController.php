@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreListingRequest;
 use App\Http\Requests\UpdateListingRequest;
 
@@ -31,7 +32,7 @@ class ListingController extends Controller
      */
     public function store(StoreListingRequest $request)
     {
-        Listing::create($request->validated());
+        auth()->user()->listings()->create($request->validated());
 
         return redirect()->route('listings.index')->with('success', 'Listing created successfully!');
     }
@@ -49,6 +50,8 @@ class ListingController extends Controller
      */
     public function edit(Listing $listing)
     {
+        Gate::authorize('update', $listing);
+
         return view('listings.edit', compact('listing'));
     }
 
@@ -57,6 +60,8 @@ class ListingController extends Controller
      */
     public function update(UpdateListingRequest $request, Listing $listing)
     {
+        Gate::authorize('update', $listing);
+
         $listing->update($request->validated());
 
         return redirect()->route('listings.index')->with('success', 'Listing updated successfully!');
@@ -67,6 +72,8 @@ class ListingController extends Controller
      */
     public function destroy(Listing $listing)
     {
+        Gate::authorize('delete', $listing);
+
         $listing->delete();
 
         return redirect()->route('listings.index')->with('success', 'Listing deleted successfully!');

@@ -43,11 +43,13 @@
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="inline-flex space-x-2">
+                                @can('update', $listing)
                                     <a href="{{ route('listings.edit', $listing) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                         Edit
                                     </a>
+                                @endcan
 
-                                    <!-- Tombol Delete -->
+                                @can('delete', $listing)
                                     <form action="{{ route('listings.destroy', $listing) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this listing?');">
                                         @csrf
                                         @method('DELETE')
@@ -55,6 +57,8 @@
                                             Delete
                                         </button>
                                     </form>
+                                @endcan
+
                                 </div>
                             </td>
                         </tr>
