@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'user@user.com',
         ]);
         $this->call(CitiesTableSeeder::class);
+        $this->call(ListingSeeder::class);
     }
 }

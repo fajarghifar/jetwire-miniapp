@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ListingController;
 use App\Http\Controllers\RegisterStepTwoController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/dashboard', function () {
             return view('dashboard');
         })->name('dashboard');
+
+        Route::resource('listings', ListingController::class);
     });
 
     Route::get('register-step2', [RegisterStepTwoController::class, 'create'])->name('register-step2.create');
