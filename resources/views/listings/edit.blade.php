@@ -21,12 +21,45 @@
 
                 <div class="mt-4">
                     <x-label for="description" value="{{ __('Description') }}" />
-                    <textarea id="price" class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" name="description">{{ old('description', $listing->description) }}</textarea>
+                    <textarea id="description" class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" name="description">{{ old('description', $listing->description) }}</textarea>
                 </div>
 
                 <div class="mt-4">
                     <x-label for="price" value="{{ __('Price') }}" />
                     <x-input id="price" class="block mt-1 w-full" type="text" name="price" :value="old('price', $listing->getRawOriginal('price'))" />
+                </div>
+
+                <div class="mt-4">
+                    <x-label for="photo1" value="{{ __('Photo 1') }}" />
+                    @if (isset($media[0]))
+                        <div class="mt-2 mb-4">
+                            <img src="{{ $media[0]->getUrl('thumb') }}" alt="" class="mt-2 mb-4">
+                            <a class="underline" href="{{ route('listings.deletePhoto', [$listing->id, $media[0]->id]) }}" onclick="return confirm('Are you sure?')">Delete Photo</a>
+                        </div>
+                    @endif
+                    <input type="file" name="photo1" />
+                </div>
+
+                <div class="mt-4">
+                    <x-label for="photo2" value="{{ __('Photo 2') }}" />
+                    @if (isset($media[1]))
+                        <div class="mt-2 mb-4">
+                            <img src="{{ $media[1]->getUrl('thumb') }}" alt="" class="mt-2 mb-4">
+                            <a class="underline" href="{{ route('listings.deletePhoto', [$listing->id, $media[1]->id]) }}" onclick="return confirm('Are you sure?')">Delete Photo</a>
+                        </div>
+                    @endif
+                    <input type="file" name="photo2" />
+                </div>
+
+                <div class="mt-4">
+                    <x-label for="photo3" value="{{ __('Photo 3') }}" />
+                    @if (isset($media[2]))
+                        <div class="mt-2 mb-4">
+                            <img src="{{ $media[2]->getUrl('thumb') }}" alt="" class="mt-2 mb-4">
+                            <a class="underline" href="{{ route('listings.deletePhoto', [$listing->id, $media[2]->id]) }}" onclick="return confirm('Are you sure?')">Delete Photo</a>
+                        </div>
+                    @endif
+                    <input type="file" name="photo3" />
                 </div>
 
                 <div class="flex items-center mt-6">

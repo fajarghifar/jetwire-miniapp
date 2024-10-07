@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'user@user.com',
         ]);
+
+        User::factory(4)->create();
         $this->call(CitiesTableSeeder::class);
         $this->call(ListingSeeder::class);
     }

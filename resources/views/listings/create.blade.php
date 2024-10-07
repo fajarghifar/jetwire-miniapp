@@ -28,6 +28,21 @@
                     <x-input id="price" class="block mt-1 w-full" type="text" name="price" :value="old('price')" />
                 </div>
 
+                <div class="mt-4">
+                    <x-label for="photo1" value="{{ __('Photo 1') }}" />
+                    <input type="file" name="photo1" />
+                </div>
+
+                <div class="mt-4">
+                    <x-label for="photo2" value="{{ __('Photo 2') }}" />
+                    <input type="file" name="photo2" />
+                </div>
+
+                <div class="mt-4">
+                    <x-label for="photo3" value="{{ __('Photo 3') }}" />
+                    <input type="file" name="photo3" />
+                </div>
+
                 <div class="flex items-center mt-6">
                     <x-button>
                         {{ __('Save listing') }}

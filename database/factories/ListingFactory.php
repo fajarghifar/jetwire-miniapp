@@ -19,7 +19,8 @@ class ListingFactory extends Factory
         return [
             'title' => $this->faker->text(20),
             'description' => $this->faker->text(200),
-            'price' => $this->faker->numberBetween(100, 10000)
+            'price' => $this->faker->numberBetween(100, 10000),
+            'user_id' => $this->faker->numberBetween(1, 5),
         ];
     }
 }
