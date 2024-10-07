@@ -25,6 +25,15 @@
                                 Description
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Categories
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Sizes
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Colors
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Price
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -43,6 +52,21 @@
                             </th>
                             <td class="px-6 py-4">
                                 {{ $listing->description }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                            @foreach ($listing->categories as $category)
+                                {{ $category->name }}
+                            @endforeach
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                            @foreach ($listing->sizes as $size)
+                                {{ $size->name }}
+                            @endforeach
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                            @foreach ($listing->colors as $color)
+                                {{ $color->name }}
+                            @endforeach
                             </td>
                             <td class="px-6 py-4">
                                 {{ $listing->price }}

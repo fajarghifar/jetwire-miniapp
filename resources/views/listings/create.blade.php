@@ -43,6 +43,33 @@
                     <input type="file" name="photo3" />
                 </div>
 
+                <div class="mt-4">
+                    <x-label for="categories" value="{{ __('Categories') }}" />
+                    @foreach($categories as $category)
+                        <input type="checkbox" name="categories[]" value="{{ $category->id }}" />
+                        {{ $category->name }}
+                        <br />
+                    @endforeach
+                </div>
+
+                <div class="mt-4">
+                    <x-label for="sizes" value="{{ __('Sizes') }}" />
+                    @foreach($sizes as $size)
+                        <input type="checkbox" name="sizes[]" value="{{ $size->id }}" />
+                        {{ $size->name }}
+                        <br />
+                    @endforeach
+                </div>
+
+                <div class="mt-4">
+                    <x-label for="colors" value="{{ __('Colors') }}" />
+                    @foreach($colors as $color)
+                        <input type="checkbox" name="colors[]" value="{{ $color->id }}" />
+                        {{ $color->name }}
+                        <br />
+                    @endforeach
+                </div>
+
                 <div class="flex items-center mt-6">
                     <x-button>
                         {{ __('Save listing') }}

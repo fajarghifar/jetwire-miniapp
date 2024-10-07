@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Size;
+use App\Models\User;
+use App\Models\Color;
+use App\Models\Category;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Cknow\Money\Casts\MoneyIntegerCast;
@@ -30,5 +34,20 @@ class Listing extends Model implements HasMedia
         $this->addMediaConversion('thumb')
             ->fit(Fit::Contain, 150, 150)
             ->nonQueued();
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class);
+    }
+
+    public function colors()
+    {
+        return $this->belongsToMany(Color::class);
     }
 }

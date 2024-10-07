@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Size;
+use App\Models\Color;
 use App\Models\Listing;
+use App\Models\Category;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreListingRequest;
 use App\Http\Requests\UpdateListingRequest;
@@ -14,7 +17,7 @@ class ListingController extends Controller
      */
     public function index()
     {
-        $listings = Listing::all();
+        $listings = Listing::with(['categories', 'colors', 'sizes'])->get();
 
         return view('listings.index', compact('listings'));
     }
@@ -24,7 +27,11 @@ class ListingController extends Controller
      */
     public function create()
     {
-        return view('listings.create');
+        $categories = Category::all();
+        $sizes = Size::all();
+        $colors = Color::all();
+
+        return view('listings.create', compact('categories', 'sizes', 'colors'));
     }
 
     /**
@@ -40,6 +47,10 @@ class ListingController extends Controller
                     ->toMediaCollection('listings');
             }
         }
+
+        $listing->categories()->attach($request->categories);
+        $listing->sizes()->attach($request->sizes);
+        $listing->colors()->attach($request->colors);
 
         return redirect()->route('listings.index')->with('success', 'Listing created successfully!');
     }
@@ -58,10 +69,14 @@ class ListingController extends Controller
     public function edit(Listing $listing)
     {
         Gate::authorize('update', $listing);
+        $listing->load('categories', 'sizes', 'colors');
 
         $media = $listing->getMedia('listings');
+        $categories = Category::all();
+        $sizes = Size::all();
+        $colors = Color::all();
 
-        return view('listings.edit', compact('listing', 'media'));
+        return view('listings.edit', compact('listing', 'media', 'categories', 'sizes', 'colors'));
     }
 
     /**
@@ -79,6 +94,10 @@ class ListingController extends Controller
                     ->toMediaCollection('listings');
             }
         }
+
+        $listing->categories()->sync($request->categories);
+        $listing->sizes()->sync($request->sizes);
+        $listing->colors()->sync($request->colors);
 
         return redirect()->route('listings.index')->with('success', 'Listing updated successfully!');
     }
