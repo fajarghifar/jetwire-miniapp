@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('size_listing', function (Blueprint $table) {
+        Schema::create('listing_size', function (Blueprint $table) {
             $table->foreignId('size_id')->constrained();
             $table->foreignId('listing_id')->constrained();
         });
@@ -21,6 +21,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('size_listing');
+        Schema::dropIfExists('listing_size');
     }
 };
