@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Size;
 use App\Models\Color;
 use App\Models\Listing;
@@ -17,9 +18,43 @@ class ListingController extends Controller
      */
     public function index()
     {
-        $listings = Listing::with(['categories', 'colors', 'sizes'])->get();
+        $listings = Listing::with(['categories', 'sizes', 'colors', 'user.city'])
+            ->when(request('title'), function ($query) {
+                $query->where('title', 'LIKE', '%' . request('title') . '%');
+            })
+            ->when(request('category'), function ($query) {
+                $query->whereHas('categories', function ($query2) {
+                    $query2->where('id', request('category'));
+                });
+            })
+            ->when(request('size'), function ($query) {
+                $query->whereHas('sizes', function ($query2) {
+                    $query2->where('id', request('size'));
+                });
+            })
+            ->when(request('color'), function ($query) {
+                $query->whereHas('colors', function ($query2) {
+                    $query2->where('id', request('color'));
+                });
+            })
+            ->when(request('city'), function ($query) {
+                $query->whereHas('user.city', function ($query2) {
+                    $query2->where('id', request('city'));
+                });
+            })
+            ->when(request('saved'), function ($query) {
+                $query->whereHas('savedUsers', function ($query2) {
+                    $query2->where('id', auth()->id());
+                });
+            })
+            ->paginate(5)->withQueryString();
 
-        return view('listings.index', compact('listings'));
+        $categories = Category::all();
+        $sizes = Size::all();
+        $colors = Color::all();
+        $cities = City::all();
+
+        return view('listings.index', compact('listings', 'categories', 'sizes', 'colors', 'cities'));
     }
 
     /**
