@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RegisterStepTwoController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
         Route::get('listings/{listingId}/photos/{photoId}/delete', [ListingController::class, 'deletePhoto'])->name('listings.deletePhoto');
         Route::resource('listings', ListingController::class);
+
+        Route::resource('/messages', MessageController::class)->only(['create', 'store']);
     });
 
     Route::get('register-step2', [RegisterStepTwoController::class, 'create'])->name('register-step2.create');
